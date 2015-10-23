@@ -74,7 +74,12 @@ app.controller('SoundBoardCtrl', function ($scope, $window) {
 
 		if ($window.cordova) {
 			ionic.Platform.ready(function (){
-				$scope.media = new $window.Media(sound.file);
+
+				var src = sound.file;
+				if (ionic.Platform.is('android')) {
+					src = '/android_asset/www/' + src;
+				}
+				$scope.media = new $window.Media(src);
 				$scope.media.play();
 			});
 		} else {
